@@ -1,0 +1,646 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#0d1117;color:#e2e8f0;min-height:100vh}
+:root{
+  --gold:#f0a500;--gold-light:#fbbf24;--teal:#0ea5e9;--teal-light:#38bdf8;
+  --purple:#8b5cf6;--purple-light:#a78bfa;--green:#10b981;--green-light:#34d399;
+  --coral:#f43f5e;--coral-light:#fb7185;--surface:#161b22;--surface2:#1c2128;
+  --border:#30363d;--text:#e2e8f0;--muted:#8b949e;
+}
+
+/* NAV */
+nav{background:#0d1117;border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--gold);letter-spacing:0.05em}
+.nav-links{display:flex;gap:0;overflow-x:auto}
+.nav-link{color:var(--muted);font-size:0.78rem;padding:0 0.85rem;height:56px;display:flex;align-items:center;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;text-decoration:none}
+.nav-link:hover,.nav-link.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0d1117 0%,#161b2e 50%,#0d1117 100%);padding:4rem 2rem;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 120%,rgba(240,165,0,.08),transparent)}
+.hero-tag{display:inline-block;background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.3);color:var(--gold);font-size:0.72rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:0.3rem 0.9rem;border-radius:20px;margin-bottom:1.2rem}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.2;margin-bottom:0.8rem;color:#fff}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero-sub{color:var(--muted);font-size:0.95rem;max-width:600px;margin:0 auto 2rem;line-height:1.6}
+.hero-badges{display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center}
+.badge{display:inline-flex;align-items:center;gap:0.4rem;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:0.35rem 0.85rem;font-size:0.78rem;color:var(--muted)}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+
+/* SECTIONS */
+.container{max-width:960px;margin:0 auto;padding:0 2rem}
+section{padding:3rem 0;border-bottom:1px solid var(--border)}
+.section-header{display:flex;align-items:center;gap:1rem;margin-bottom:0.5rem}
+.section-num{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:600;flex-shrink:0}
+.section-num.gold{background:rgba(240,165,0,.15);color:var(--gold);border:1px solid rgba(240,165,0,.3)}
+.section-num.teal{background:rgba(14,165,233,.15);color:var(--teal);border:1px solid rgba(14,165,233,.3)}
+.section-num.purple{background:rgba(139,92,246,.15);color:var(--purple);border:1px solid rgba(139,92,246,.3)}
+.section-num.green{background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3)}
+.section-num.coral{background:rgba(244,63,94,.15);color:var(--coral);border:1px solid rgba(244,63,94,.3)}
+h2{font-family:'DM Serif Display',serif;font-size:1.5rem;color:#fff;line-height:1.3}
+.section-desc{color:var(--muted);font-size:0.85rem;margin:0.4rem 0 1.8rem;padding-left:3rem}
+
+/* CARDS GRID */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
+.card-head{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.75rem}
+.card-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0}
+.card-title{font-weight:600;font-size:0.9rem;color:#fff}
+.card-subtitle{font-size:0.75rem;color:var(--muted);margin-top:0.15rem}
+.card p{font-size:0.82rem;color:var(--muted);line-height:1.6}
+.tag-list{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.75rem}
+.tag{font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:10px;font-weight:500}
+.tag-direct{background:rgba(16,185,129,.12);color:var(--green-light);border:1px solid rgba(16,185,129,.25)}
+.tag-indirect{background:rgba(14,165,233,.12);color:var(--teal-light);border:1px solid rgba(14,165,233,.25)}
+.tag-critico{background:rgba(244,63,94,.12);color:var(--coral-light);border:1px solid rgba(244,63,94,.25)}
+
+/* POWER MATRIX */
+.matrix-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.matrix-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;background:var(--border)}
+.quadrant{background:var(--surface2);padding:1.2rem;min-height:160px}
+.quadrant-label{font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.7rem;display:flex;align-items:center;gap:0.4rem}
+.quadrant-actors{display:flex;flex-direction:column;gap:0.5rem}
+.actor-chip{display:flex;align-items:flex-start;gap:0.5rem;font-size:0.78rem;line-height:1.4}
+.actor-dot{width:6px;height:6px;border-radius:50%;margin-top:0.3rem;flex-shrink:0}
+.actor-chip strong{color:#fff;font-weight:500}
+.actor-chip span{color:var(--muted)}
+.matrix-axes{display:flex;justify-content:space-between;padding:0.5rem 0.75rem;border-top:1px solid var(--border)}
+.axis-label{font-size:0.7rem;color:var(--muted);display:flex;align-items:center;gap:0.3rem}
+
+/* TREE NODES */
+.tree{display:flex;flex-direction:column;align-items:center;gap:0}
+.tree-node{border-radius:10px;padding:0.7rem 1rem;font-size:0.82rem;text-align:center;position:relative;max-width:240px;min-width:160px;line-height:1.4}
+.tree-node.root-problem{background:rgba(244,63,94,.15);border:2px solid var(--coral);color:var(--coral-light);font-weight:600;font-size:0.88rem;max-width:320px}
+.tree-node.root-obj{background:rgba(16,185,129,.15);border:2px solid var(--green);color:var(--green-light);font-weight:600;font-size:0.88rem;max-width:320px}
+.tree-node.cause{background:var(--surface2);border:1px solid var(--border);color:var(--text)}
+.tree-node.effect{background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.4);color:var(--purple-light)}
+.tree-node.means{background:rgba(14,165,233,.1);border:1px solid rgba(14,165,233,.4);color:var(--teal-light)}
+.tree-node.end-goal{background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.4);color:var(--gold-light)}
+.tree-connector{width:2px;height:24px;background:var(--border);margin:0 auto}
+.tree-row{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap}
+.tree-section-label{font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin:1.5rem auto 0.7rem;display:block;text-align:center}
+.vert-conn{display:flex;flex-direction:column;align-items:center}
+.horiz-branches{position:relative;display:flex;gap:0.75rem;justify-content:center}
+
+/* SMART TABLE */
+.smart-table{width:100%;border-collapse:collapse;font-size:0.82rem}
+.smart-table th{background:var(--surface2);padding:0.6rem 0.8rem;text-align:left;font-weight:600;font-size:0.75rem;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.smart-table td{padding:0.7rem 0.8rem;border-bottom:1px solid rgba(48,54,61,.5);vertical-align:top;line-height:1.5;color:var(--text);font-size:0.8rem}
+.smart-table tr:last-child td{border-bottom:none}
+.smart-letter{width:28px;height:28px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;margin-right:0.4rem;vertical-align:middle}
+.sl-s{background:rgba(240,165,0,.15);color:var(--gold)}
+.sl-m{background:rgba(14,165,233,.15);color:var(--teal)}
+.sl-a{background:rgba(16,185,129,.15);color:var(--green)}
+.sl-r{background:rgba(139,92,246,.15);color:var(--purple)}
+.sl-t{background:rgba(244,63,94,.15);color:var(--coral)}
+.smart-check{color:var(--green-light);font-size:0.8rem;font-weight:500}
+
+/* PROTO SECTION */
+.proto-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.proto-screen{background:#000;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.proto-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0a0f1e,#1a0535,#0a1a0f)}
+.proto-content{position:relative;z-index:1;text-align:center;padding:2rem}
+.proto-play{width:64px;height:64px;background:rgba(240,165,0,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;cursor:pointer;transition:transform .2s}
+.proto-play:hover{transform:scale(1.08)}
+.proto-play-icon{width:0;height:0;border-top:14px solid transparent;border-bottom:14px solid transparent;border-left:22px solid #000;margin-left:4px}
+.proto-title-screen{color:#fff;font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:0.4rem}
+.proto-sub-screen{color:rgba(255,255,255,.5);font-size:0.78rem}
+.proto-meta{padding:1rem 1.25rem;display:flex;gap:1rem;flex-wrap:wrap}
+.proto-meta-item{font-size:0.78rem;color:var(--muted);display:flex;align-items:center;gap:0.35rem}
+.proto-meta-item strong{color:var(--text)}
+.proto-stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0.75rem;padding:0 1.25rem 1.25rem}
+.proto-stage{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:0.75rem;font-size:0.78rem}
+.proto-stage-num{font-size:0.68rem;color:var(--gold);font-weight:600;margin-bottom:0.3rem}
+.proto-stage-title{color:#fff;font-weight:500;margin-bottom:0.2rem}
+.proto-stage-desc{color:var(--muted);font-size:0.73rem;line-height:1.4}
+
+/* NARRATIVE */
+.narrative-box{background:var(--surface2);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:1rem 1.2rem;font-size:0.83rem;color:var(--muted);line-height:1.7;margin:1rem 0}
+.narrative-box strong{color:var(--text)}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  nav{padding:0 1rem}.container{padding:0 1rem}
+  .nav-logo{display:none}
+  .matrix-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">AgileConf 2026</span>
+  <div class="nav-links">
+    <a class="nav-link active" onclick="scrollTo('actores')">Actores</a>
+    <a class="nav-link" onclick="scrollTo('matriz')">Poder–Influencia</a>
+    <a class="nav-link" onclick="scrollTo('problemas')">Árbol Problemas</a>
+    <a class="nav-link" onclick="scrollTo('objetivos')">Árbol Objetivos</a>
+    <a class="nav-link" onclick="scrollTo('prototipo')">Prototipo</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Examen Parcial 2026-II · UNTELS · Ingeniería de Sistemas</div>
+  <h1>Congreso Estudiantil de<br><em>Proyectos de Base Tecnológica</em></h1>
+  <p class="hero-sub">Formulación y evaluación de un congreso bajo el Agile Mindset — cerrando la brecha entre la teoría universitaria y la práctica industrial.</p>
+  <div class="hero-badges">
+    <span class="badge"><span class="badge-dot"></span>Scrum · Kanban</span>
+    <span class="badge"><span class="badge-dot" style="background:var(--teal)"></span>Design Thinking</span>
+    <span class="badge"><span class="badge-dot" style="background:var(--purple)"></span>Lean Startup</span>
+    <span class="badge"><span class="badge-dot" style="background:var(--gold)"></span>Agile Mindset</span>
+  </div>
+</div>
+
+<!-- ===== SECCIÓN 1: ACTORES ===== -->
+<div id="actores">
+<section>
+<div class="container">
+  <div class="section-header">
+    <span class="section-num gold">01</span>
+    <h2>Clasificación de Actores Directos e Indirectos</h2>
+  </div>
+  <p class="section-desc">Identificación y argumentación de los actores que participan en el congreso según su nivel de involucramiento con el proyecto.</p>
+
+  <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap">
+    <span class="tag tag-direct">● Actores Directos</span>
+    <span class="tag tag-indirect">● Actores Indirectos</span>
+    <span class="tag tag-critico">● Actor Crítico</span>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:1.2rem">
+
+    <div class="card" style="border-color:rgba(16,185,129,.35)">
+      <div class="card-head">
+        <div class="card-icon" style="background:rgba(16,185,129,.15);color:var(--green)">🎓</div>
+        <div><div class="card-title">Estudiantes de Ing. de Sistemas</div><div class="card-subtitle">Actor Directo · Beneficiario primario</div></div>
+      </div>
+      <p>Principal público objetivo del congreso. Participan activamente en talleres y ponencias, adquiriendo competencias en Scrum, Kanban y Design Thinking. Su aprendizaje práctico es el indicador de éxito más directo del evento.</p>
+      <div class="tag-list"><span class="tag tag-direct">Directo</span><span class="tag tag-critico">Crítico</span></div>
+    </div>
+
+    <div class="card" style="border-color:rgba(16,185,129,.35)">
+      <div class="card-head">
+        <div class="card-icon" style="background:rgba(16,185,129,.15);color:var(--green)">👨‍🏫</div>
+        <div><div class="card-title">Docentes y Coordinadores académicos</div><div class="card-subtitle">Actor Directo · Organizador y facilitador</div></div>
+      </div>
+      <p>Diseñan el programa académico, seleccionan ponentes y garantizan la coherencia pedagógica del congreso con los contenidos curriculares. Son responsables de la calidad del contenido entregado.</p>
+      <div class="tag-list"><span class="tag tag-direct">Directo</span><span class="tag tag-critico">Crítico</span></div>
+    </div>
+
+    <div class="card" style="border-color:rgba(16,185,129,.35)">
+      <div class="card-head">
+        <div class="card-icon" style="background:rgba(16,185,129,.15);color:var(--green)">🏛️</div>
+        <div><div class="card-title">Autoridades universitarias (UNTELS)</div><div class="card-subtitle">Actor Directo · Patrocinador institucional</div></div>
+      </div>
+      <p>Aprueban, financian y legitiman el evento. Su respaldo es necesario para la asignación de espacios físicos, presupuesto y difusión oficial. Sin su aval, el congreso no puede ejecutarse.</p>
+      <div class="tag-list"><span class="tag tag-direct">Directo</span></div>
+    </div>
+
+    <div class="card" style="border-color:rgba(16,185,129,.35)">
+      <div class="card-head">
+        <div class="card-icon" style="background:rgba(16,185,129,.15);color:var(--green)">🎤</div>
+        <div><div class="card-title">Ponentes y expertos invitados</div><div class="card-subtitle">Actor Directo · Proveedor de contenido</div></div>
+      </div>
+      <p>Profesionales de la industria que aportan experiencias reales de Agile en entornos empresariales. Su participación cierra la brecha entre teoría y práctica, siendo el valor diferencial del congreso.</p>
+      <div class="tag-list"><span class="tag tag-direct">Directo</span><span class="tag tag-critico">Crítico</span></div>
+    </div>
+
+    <div class="card" style="border-color:rgba(14,165,233,.35)">
+      <div class="card-head">
+        <div class="card-icon" style="background:rgba(14,165,233,.15);color:var(--teal)">🏢</div>
+        <div><div class="card-title">Empresas de tecnología</div><div class="card-subtitle">Actor Indirecto · Empleador futuro</div></div>
+      </div>
+      <p>Se benefician a largo plazo al contar con egresados formados en metodologías ágiles. Pueden participar como auspiciadores o dando visibilidad al evento, sin involucrarse en la organización directa.</p>
+      <div class="tag-list"><span class="tag tag-indirect">Indirecto</span></div>
+    </div>
+
+    <div class="card" style="border-color:rgba(14,165,233,.35)">
+      <div class="card-head">
+        <div class="card-icon" style="background:rgba(14,165,233,.15);color:var(--teal)">👨‍👩‍👧</div>
+        <div><div class="card-title">Familias de los estudiantes</div><div class="card-subtitle">Actor Indirecto · Entorno de apoyo</div></div>
+      </div>
+      <p>Impactadas positivamente al ver mejorar la empleabilidad y el perfil profesional de sus hijos. No participan en el evento pero son afectadas por sus resultados a mediano plazo.</p>
+      <div class="tag-list"><span class="tag tag-indirect">Indirecto</span></div>
+    </div>
+
+    <div class="card" style="border-color:rgba(14,165,233,.35)">
+      <div class="card-head">
+        <div class="card-icon" style="background:rgba(14,165,233,.15);color:var(--teal)">🌐</div>
+        <div><div class="card-title">Comunidad tecnológica regional</div><div class="card-subtitle">Actor Indirecto · Ecosistema de innovación</div></div>
+      </div>
+      <p>Otros estudiantes de universidades cercanas, comunidades tech y meetups que se benefician del networking y la difusión de conocimiento agile en el entorno académico limeño.</p>
+      <div class="tag-list"><span class="tag tag-indirect">Indirecto</span></div>
+    </div>
+
+    <div class="card" style="border-color:rgba(14,165,233,.35)">
+      <div class="card-head">
+        <div class="card-icon" style="background:rgba(14,165,233,.15);color:var(--teal)">📰</div>
+        <div><div class="card-title">Medios y redes de comunicación</div><div class="card-subtitle">Actor Indirecto · Amplificador</div></div>
+      </div>
+      <p>Pueden difundir el evento y sus resultados, amplificando el alcance del congreso más allá de la universidad. Su participación no es necesaria para la ejecución, pero potencia el impacto institucional.</p>
+      <div class="tag-list"><span class="tag tag-indirect">Indirecto</span></div>
+    </div>
+
+  </div>
+
+  <div class="narrative-box">
+    <strong>Justificación metodológica:</strong> La distinción directo/indirecto se basa en el nivel de involucramiento operativo y el impacto inmediato del proyecto sobre el actor. Los <strong>actores directos</strong> participan activamente durante la ejecución del congreso y son impactados de forma inmediata por sus resultados. Los <strong>actores indirectos</strong> reciben beneficios mediatos o contribuyen sin intervenir en la operación del evento.
+  </div>
+</div>
+</section>
+</div>
+
+<!-- ===== SECCIÓN 2: MATRIZ PODER-INFLUENCIA-INTERÉS ===== -->
+<div id="matriz">
+<section>
+<div class="container">
+  <div class="section-header">
+    <span class="section-num teal">02</span>
+    <h2>Análisis Tridimensional Poder–Influencia–Interés</h2>
+  </div>
+  <p class="section-desc">Matriz de priorización de stakeholders según su capacidad de impacto y nivel de interés en el congreso. Se identifican actores críticos para la gestión estratégica del proyecto.</p>
+
+  <div class="matrix-wrap">
+    <div style="display:grid;grid-template-columns:auto 1fr;align-items:center;padding:0.75rem 1rem;border-bottom:1px solid var(--border)">
+      <div style="writing-mode:vertical-rl;transform:rotate(180deg);font-size:0.7rem;font-weight:600;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;padding:0.5rem 0">PODER / AUTORIDAD →</div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:0.68rem;color:var(--muted);padding:0 0.5rem;margin-bottom:0.3rem">
+          <span>BAJO INTERÉS</span><span>ALTO INTERÉS</span>
+        </div>
+        <div class="matrix-grid">
+
+          <div class="quadrant">
+            <div class="quadrant-label" style="color:var(--muted)">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--border);display:inline-block"></span>
+              Alto Poder · Bajo Interés — Mantener satisfechos
+            </div>
+            <div class="quadrant-actors">
+              <div class="actor-chip">
+                <span class="actor-dot" style="background:var(--teal)"></span>
+                <div><strong>Autoridades universitarias</strong><br><span>Poder: Alto · Interés: Medio-bajo. Deben aprobar y financiar. Gestión vía informes periódicos y solicitudes formales.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quadrant" style="border:1px solid rgba(240,165,0,.25);background:rgba(240,165,0,.03)">
+            <div class="quadrant-label" style="color:var(--gold)">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block"></span>
+              Alto Poder · Alto Interés — Gestionar de cerca ⭐
+            </div>
+            <div class="quadrant-actors">
+              <div class="actor-chip">
+                <span class="actor-dot" style="background:var(--coral)"></span>
+                <div><strong>Docentes y coordinadores</strong><br><span>Poder: Alto · Interés: Alto. Diseñan el programa y garantizan la calidad. Involucrarlos desde la planificación.</span></div>
+              </div>
+              <div class="actor-chip" style="margin-top:0.5rem">
+                <span class="actor-dot" style="background:var(--green)"></span>
+                <div><strong>Ponentes expertos</strong><br><span>Poder: Alto · Interés: Alto. Sin ellos el congreso pierde su valor central. Relación prioritaria y personalizada.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quadrant">
+            <div class="quadrant-label" style="color:var(--muted)">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--border);display:inline-block"></span>
+              Bajo Poder · Bajo Interés — Monitorear
+            </div>
+            <div class="quadrant-actors">
+              <div class="actor-chip">
+                <span class="actor-dot" style="background:var(--purple)"></span>
+                <div><strong>Medios de comunicación</strong><br><span>Bajo impacto directo, pero útiles para difusión. Informar puntualmente sin dedicar excesivos recursos.</span></div>
+              </div>
+              <div class="actor-chip" style="margin-top:0.5rem">
+                <span class="actor-dot" style="background:var(--purple)"></span>
+                <div><strong>Familias de estudiantes</strong><br><span>Periféricas al proyecto. No requieren gestión activa.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quadrant">
+            <div class="quadrant-label" style="color:var(--teal)">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--teal);display:inline-block"></span>
+              Bajo Poder · Alto Interés — Mantener informados
+            </div>
+            <div class="quadrant-actors">
+              <div class="actor-chip">
+                <span class="actor-dot" style="background:var(--green)"></span>
+                <div><strong>Estudiantes</strong><br><span>Interés: Muy alto · Poder directo: Bajo. Son el fin del proyecto. Comunicar claramente propósito, agenda y beneficios.</span></div>
+              </div>
+              <div class="actor-chip" style="margin-top:0.5rem">
+                <span class="actor-dot" style="background:var(--teal)"></span>
+                <div><strong>Empresas de tecnología</strong><br><span>Interesadas en el talento formado. Pueden aportar patrocinio si se les involucra estratégicamente.</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="matrix-axes">
+      <span class="axis-label">← Bajo interés en el proyecto</span>
+      <span class="axis-label" style="color:var(--gold)">⭐ Zona de actores críticos</span>
+      <span class="axis-label">Alto interés en el proyecto →</span>
+    </div>
+  </div>
+
+  <div style="margin-top:1.5rem">
+    <div class="narrative-box">
+      <strong>Análisis narrativo — Actores críticos:</strong><br><br>
+      <strong>Docentes y coordinadores académicos</strong> son el actor más crítico del congreso. Poseen poder institucional para modificar el diseño del evento y un alto interés en el éxito del mismo, ya que su reputación académica está vinculada a la calidad del resultado. La estrategia recomendada es integrarlos en el comité organizador desde la fase de diseño, asignándoles roles formales con autonomía en decisiones pedagógicas.<br><br>
+      <strong>Ponentes y expertos invitados</strong> concentran el valor diferencial del congreso. Sin su participación, el objetivo de cerrar la brecha teoría-práctica no puede cumplirse. Son actores de alto interés (proyectan marca personal) y alto poder de contenido. La gestión debe ser personalizada, con invitaciones formales, agenda flexible y reconocimiento explícito de su aporte.<br><br>
+      <strong>Estudiantes</strong>, aunque con bajo poder de decisión, son el destinatario final. Su motivación y participación activa son indicadores directos del impacto del proyecto. Deben ser informados con anticipación sobre los beneficios concretos del congreso (certificaciones, red de contactos, habilidades).
+    </div>
+  </div>
+
+</div>
+</section>
+</div>
+
+<!-- ===== SECCIÓN 3: ÁRBOL DE PROBLEMAS ===== -->
+<div id="problemas">
+<section>
+<div class="container">
+  <div class="section-header">
+    <span class="section-num purple">03</span>
+    <h2>Árbol de Problemas</h2>
+  </div>
+  <p class="section-desc">Análisis de causalidad mediante la metodología del árbol de problemas, vinculando causas y efectos al problema central identificado.</p>
+
+  <!-- EFECTOS -->
+  <span class="tree-section-label" style="color:var(--purple)">▲ EFECTOS (Consecuencias del problema)</span>
+  <div class="tree-row" style="margin-bottom:0">
+    <div class="tree-node effect">Egresados sin competencias ágiles demandadas por la industria</div>
+    <div class="tree-node effect">Baja empleabilidad en empresas de desarrollo de software</div>
+    <div class="tree-node effect">Proyectos universitarios desconectados de estándares industriales</div>
+  </div>
+
+  <div style="display:flex;justify-content:center;margin:0.3rem 0">
+    <div style="width:2px;height:28px;background:var(--border)"></div>
+  </div>
+
+  <!-- PROBLEMA CENTRAL -->
+  <div style="display:flex;justify-content:center">
+    <div class="tree-node root-problem">⚠️ Brecha significativa entre la formación universitaria en TI y las competencias ágiles exigidas por la industria tecnológica</div>
+  </div>
+
+  <div style="display:flex;justify-content:center;margin:0.3rem 0">
+    <div style="width:2px;height:28px;background:var(--border)"></div>
+  </div>
+
+  <!-- CAUSAS -->
+  <span class="tree-section-label" style="color:var(--muted)">▼ CAUSAS (Raíces del problema)</span>
+
+  <div class="grid-3" style="margin-bottom:0.75rem">
+    <div class="card" style="border-color:rgba(139,92,246,.3)">
+      <div style="font-size:0.7rem;color:var(--purple);font-weight:600;margin-bottom:0.4rem">CAUSA 1</div>
+      <div style="font-size:0.83rem;color:#fff;font-weight:500;margin-bottom:0.35rem">Currículo académico desactualizado</div>
+      <p style="font-size:0.76rem">Los planes de estudio no incorporan frameworks ágiles actuales (Scrum, Kanban) como ejes prácticos de formación.</p>
+      <div style="margin-top:0.6rem;font-size:0.72rem;color:var(--muted)">📌 Stakeholder vinculado: Autoridades y docentes</div>
+    </div>
+    <div class="card" style="border-color:rgba(139,92,246,.3)">
+      <div style="font-size:0.7rem;color:var(--purple);font-weight:600;margin-bottom:0.4rem">CAUSA 2</div>
+      <div style="font-size:0.83rem;color:#fff;font-weight:500;margin-bottom:0.35rem">Escasa vinculación universidad–empresa</div>
+      <p style="font-size:0.76rem">Pocos espacios formales donde profesionales de la industria transmitan experiencias reales de trabajo ágil a estudiantes.</p>
+      <div style="margin-top:0.6rem;font-size:0.72rem;color:var(--muted)">📌 Stakeholder vinculado: Empresas TI · Ponentes</div>
+    </div>
+    <div class="card" style="border-color:rgba(139,92,246,.3)">
+      <div style="font-size:0.7rem;color:var(--purple);font-weight:600;margin-bottom:0.4rem">CAUSA 3</div>
+      <div style="font-size:0.83rem;color:#fff;font-weight:500;margin-bottom:0.35rem">Formación predominantemente teórica</div>
+      <p style="font-size:0.76rem">Los estudiantes aprenden metodologías en papel pero tienen escasas oportunidades de aplicarlas en proyectos reales durante la carrera.</p>
+      <div style="margin-top:0.6rem;font-size:0.72rem;color:var(--muted)">📌 Stakeholder vinculado: Docentes · Estudiantes</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card" style="border-color:rgba(139,92,246,.3)">
+      <div style="font-size:0.7rem;color:var(--purple);font-weight:600;margin-bottom:0.4rem">CAUSA 4</div>
+      <div style="font-size:0.83rem;color:#fff;font-weight:500;margin-bottom:0.35rem">Mentalidad tradicional en la gestión de proyectos</div>
+      <p style="font-size:0.76rem">Prevalece el enfoque en cascada (waterfall) tanto en el diseño curricular como en los proyectos estudiantiles, limitando la adopción de mentalidad iterativa.</p>
+      <div style="margin-top:0.6rem;font-size:0.72rem;color:var(--muted)">📌 Stakeholder vinculado: Docentes · Coordinadores</div>
+    </div>
+    <div class="card" style="border-color:rgba(139,92,246,.3)">
+      <div style="font-size:0.7rem;color:var(--purple);font-weight:600;margin-bottom:0.4rem">CAUSA 5</div>
+      <div style="font-size:0.83rem;color:#fff;font-weight:500;margin-bottom:0.35rem">Falta de espacios de práctica y networking</div>
+      <p style="font-size:0.76rem">La universidad carece de eventos regulares que fomenten la práctica de metodologías ágiles, el trabajo colaborativo y la construcción de redes profesionales.</p>
+      <div style="margin-top:0.6rem;font-size:0.72rem;color:var(--muted)">📌 Stakeholder vinculado: Estudiantes · Comunidad tech</div>
+    </div>
+  </div>
+
+  <div class="narrative-box" style="margin-top:1.5rem">
+    <strong>Justificación metodológica:</strong> El árbol de problemas sigue la metodología ZOPP (Planificación de Proyectos Orientada por Objetivos). El <strong>problema central</strong> no es un síntoma ni una solución disfrazada, sino la situación negativa medular que afecta al grupo destinatario (estudiantes). Las <strong>causas</strong> representan las raíces estructurales del problema, vinculadas explícitamente a los stakeholders responsables de su perpetuación o solución. Los <strong>efectos</strong> describen las consecuencias observables si el problema no es intervenido, justificando la necesidad del congreso como instrumento de cambio.
+  </div>
+
+</div>
+</section>
+</div>
+
+<!-- ===== SECCIÓN 4: ÁRBOL DE OBJETIVOS ===== -->
+<div id="objetivos">
+<section>
+<div class="container">
+  <div class="section-header">
+    <span class="section-num green">04</span>
+    <h2>Árbol de Objetivos con Metodología SMART</h2>
+  </div>
+  <p class="section-desc">Conversión del árbol de problemas en árbol de objetivos, con coherencia interna y validación de cada objetivo bajo criterios SMART.</p>
+
+  <!-- FIN SUPERIOR -->
+  <span class="tree-section-label" style="color:var(--gold)">▲ FINES (Impacto de largo plazo)</span>
+  <div class="tree-row">
+    <div class="tree-node end-goal">Egresados competitivos con perfil ágil alineado a demanda industrial</div>
+    <div class="tree-node end-goal">Mayor employabilidad y vinculación con el ecosistema TI peruano</div>
+  </div>
+
+  <div style="display:flex;justify-content:center;margin:0.3rem 0">
+    <div style="width:2px;height:28px;background:var(--border)"></div>
+  </div>
+
+  <!-- OBJETIVO CENTRAL -->
+  <div style="display:flex;justify-content:center">
+    <div class="tree-node root-obj">✅ Reducir la brecha entre la formación universitaria en TI y las competencias ágiles demandadas por la industria tecnológica</div>
+  </div>
+
+  <div style="display:flex;justify-content:center;margin:0.3rem 0">
+    <div style="width:2px;height:28px;background:var(--border)"></div>
+  </div>
+
+  <!-- MEDIOS -->
+  <span class="tree-section-label" style="color:var(--teal)">▼ MEDIOS (Objetivos específicos del congreso)</span>
+
+  <div class="grid-3" style="margin-bottom:0.75rem">
+    <div class="card" style="border-color:rgba(14,165,233,.3)">
+      <div style="font-size:0.7rem;color:var(--teal);font-weight:600;margin-bottom:0.4rem">MEDIO 1</div>
+      <div style="font-size:0.83rem;color:#fff;font-weight:500;margin-bottom:0.35rem">Incorporar contenido ágil actualizado</div>
+      <p style="font-size:0.76rem">Diseñar un programa académico con al menos 4 talleres sobre Scrum, Kanban, Design Thinking y Lean Startup, impartidos por profesionales certificados.</p>
+    </div>
+    <div class="card" style="border-color:rgba(14,165,233,.3)">
+      <div style="font-size:0.7rem;color:var(--teal);font-weight:600;margin-bottom:0.4rem">MEDIO 2</div>
+      <div style="font-size:0.83rem;color:#fff;font-weight:500;margin-bottom:0.35rem">Crear espacio de vinculación universidad–empresa</div>
+      <p style="font-size:0.76rem">Convocar a mínimo 3 empresas del sector TI para participar como ponentes o auspiciadores, generando networking con al menos 80 estudiantes.</p>
+    </div>
+    <div class="card" style="border-color:rgba(14,165,233,.3)">
+      <div style="font-size:0.7rem;color:var(--teal);font-weight:600;margin-bottom:0.4rem">MEDIO 3</div>
+      <div style="font-size:0.83rem;color:#fff;font-weight:500;margin-bottom:0.35rem">Promover aprendizaje experiencial</div>
+      <p style="font-size:0.76rem">Asegurar que el 60% del tiempo del congreso sea práctico (casos reales, simulaciones ágiles, hackathons breves) y no meramente expositivo.</p>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="card" style="border-color:rgba(14,165,233,.3)">
+      <div style="font-size:0.7rem;color:var(--teal);font-weight:600;margin-bottom:0.4rem">MEDIO 4</div>
+      <div style="font-size:0.83rem;color:#fff;font-weight:500;margin-bottom:0.35rem">Transformar la mentalidad de gestión</div>
+      <p style="font-size:0.76rem">Generar que al menos el 70% de los participantes declare un cambio en su comprensión de la gestión iterativa vs. tradicional (encuesta post-evento).</p>
+    </div>
+    <div class="card" style="border-color:rgba(14,165,233,.3)">
+      <div style="font-size:0.7rem;color:var(--teal);font-weight:600;margin-bottom:0.4rem">MEDIO 5</div>
+      <div style="font-size:0.83rem;color:#fff;font-weight:500;margin-bottom:0.35rem">Institucionalizar el espacio de práctica ágil</div>
+      <p style="font-size:0.76rem">Lograr que el congreso quede registrado como actividad académica anual en el calendario de la UNTELS, asegurando su continuidad y escalabilidad.</p>
+    </div>
+  </div>
+
+  <!-- TABLA SMART -->
+  <div style="margin-top:2rem">
+    <div style="font-size:0.85rem;font-weight:600;color:#fff;margin-bottom:0.75rem">Validación SMART del Objetivo Principal</div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;overflow-x:auto">
+      <table class="smart-table">
+        <thead>
+          <tr>
+            <th>Criterio</th><th>Pregunta clave</th><th>Verificación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="smart-letter sl-s">S</span><strong>Específico</strong></td>
+            <td style="color:var(--muted)">¿Qué se logrará exactamente?</td>
+            <td><span class="smart-check">✓</span> Reducir la brecha de competencias ágiles entre la academia y la industria TI, mediante la realización de un congreso con talleres prácticos y ponentes especializados en UNTELS.</td>
+          </tr>
+          <tr>
+            <td><span class="smart-letter sl-m">M</span><strong>Medible</strong></td>
+            <td style="color:var(--muted)">¿Cómo sabremos que se logró?</td>
+            <td><span class="smart-check">✓</span> ≥80 estudiantes participantes · ≥4 talleres ejecutados · ≥3 empresas TI involucradas · ≥70% declara cambio de mentalidad ágil en encuesta post-evento.</td>
+          </tr>
+          <tr>
+            <td><span class="smart-letter sl-a">A</span><strong>Alcanzable</strong></td>
+            <td style="color:var(--muted)">¿Es realista con los recursos disponibles?</td>
+            <td><span class="smart-check">✓</span> La universidad cuenta con infraestructura y docentes. Se requiere respaldo institucional y alianzas con ponentes. La escala del evento es acorde a la capacidad organizativa de un equipo estudiantil asesorado.</td>
+          </tr>
+          <tr>
+            <td><span class="smart-letter sl-r">R</span><strong>Relevante</strong></td>
+            <td style="color:var(--muted)">¿Contribuye al objetivo estratégico mayor?</td>
+            <td><span class="smart-check">✓</span> Alineado a la misión de la UNTELS de formar profesionales competitivos. Responde a la demanda del mercado laboral TI que exige conocimientos ágiles como requisito mínimo.</td>
+          </tr>
+          <tr>
+            <td><span class="smart-letter sl-t">T</span><strong>Con plazo</strong></td>
+            <td style="color:var(--muted)">¿En qué tiempo se ejecutará?</td>
+            <td><span class="smart-check">✓</span> Ejecución en 1 día intensivo (jornada de 8 horas). Planificación en 6 semanas previas. Evaluación de resultados en la semana posterior al evento (semestre 2026-II).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</section>
+</div>
+
+<!-- ===== SECCIÓN 5: PROTOTIPO ===== -->
+<div id="prototipo">
+<section>
+<div class="container">
+  <div class="section-header">
+    <span class="section-num coral">05</span>
+    <h2>Prototipo — Solución Propuesta</h2>
+  </div>
+  <p class="section-desc">Video-prototipo de mínimo 2 minutos que muestra la solución propuesta: plataforma digital integral para la organización, registro e impacto del Congreso Agile UNTELS.</p>
+
+  <div class="proto-card">
+    <div class="proto-screen">
+      <div class="proto-bg"></div>
+      <div class="proto-content">
+        <div class="proto-play" onclick="this.style.opacity='0.7'">
+          <div class="proto-play-icon"></div>
+        </div>
+        <div class="proto-title-screen">AgileConf Platform · UNTELS</div>
+        <div class="proto-sub-screen">Plataforma integral para el congreso estudiantil · Demo 2026-II</div>
+        <div style="margin-top:1.2rem;display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap">
+          <span style="background:rgba(240,165,0,.2);border:1px solid rgba(240,165,0,.4);color:var(--gold);font-size:0.7rem;padding:0.25rem 0.6rem;border-radius:10px">Duración: ~3 min</span>
+          <span style="background:rgba(14,165,233,.2);border:1px solid rgba(14,165,233,.4);color:var(--teal);font-size:0.7rem;padding:0.25rem 0.6rem;border-radius:10px">Registro · Agenda · Métricas</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="proto-meta">
+      <div class="proto-meta-item">🎬 <strong>Herramienta sugerida:</strong> Figma / Canva + screencast</div>
+      <div class="proto-meta-item">⏱️ <strong>Duración:</strong> 2–3 minutos</div>
+      <div class="proto-meta-item">🎯 <strong>Formato:</strong> Demostración de flujo de usuario</div>
+    </div>
+
+    <div style="padding:0 1.25rem 0.75rem;font-size:0.82rem;color:var(--muted)">
+      El prototipo muestra el recorrido completo de un estudiante en la plataforma AgileConf, desde el registro hasta la obtención de su certificado de participación.
+    </div>
+
+    <div class="proto-stages">
+      <div class="proto-stage">
+        <div class="proto-stage-num">00:00 – 00:25</div>
+        <div class="proto-stage-title">Landing del congreso</div>
+        <div class="proto-stage-desc">Presentación del evento, fecha, modalidad y propósito del congreso AgileConf UNTELS 2026.</div>
+      </div>
+      <div class="proto-stage">
+        <div class="proto-stage-num">00:25 – 00:55</div>
+        <div class="proto-stage-title">Registro de participante</div>
+        <div class="proto-stage-desc">Formulario de inscripción, selección de talleres (Scrum, Kanban, DT, Lean) y confirmación por correo.</div>
+      </div>
+      <div class="proto-stage">
+        <div class="proto-stage-num">00:55 – 01:30</div>
+        <div class="proto-stage-title">Agenda interactiva</div>
+        <div class="proto-stage-desc">Vista de la agenda del día con ponentes, horarios, salas y descripción de cada taller y ponencia.</div>
+      </div>
+      <div class="proto-stage">
+        <div class="proto-stage-num">01:30 – 01:55</div>
+        <div class="proto-stage-title">Panel de ponentes</div>
+        <div class="proto-stage-desc">Perfiles de expertos invitados de la industria TI, con opción de agendar sesión de networking.</div>
+      </div>
+      <div class="proto-stage">
+        <div class="proto-stage-num">01:55 – 02:20</div>
+        <div class="proto-stage-title">Dashboard del organizador</div>
+        <div class="proto-stage-desc">Vista administrativa: inscritos en tiempo real, asistencia por taller, feedback y métricas de impacto.</div>
+      </div>
+      <div class="proto-stage">
+        <div class="proto-stage-num">02:20 – 02:40</div>
+        <div class="proto-stage-title">Certificado digital</div>
+        <div class="proto-stage-desc">Generación y descarga automática del certificado de participación validado digitalmente por UNTELS.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="narrative-box" style="margin-top:1.25rem">
+    <strong>Idea principal del prototipo:</strong> La solución propuesta es una <strong>plataforma web del congreso</strong> que digitaliza todo el ciclo del evento — desde la inscripción hasta la emisión de certificados — eliminando la fricción administrativa y permitiendo a los organizadores medir el impacto en tiempo real. Aplicando principios Lean Startup, el MVP (Minimum Viable Product) sería el módulo de registro + agenda; en iteraciones posteriores se añadirían el networking y el dashboard de métricas. La plataforma en sí es un proyecto de base tecnológica que los propios estudiantes pueden desarrollar con metodología Scrum durante el semestre.
+  </div>
+
+</div>
+</section>
+</div>
+
+<!-- FOOTER -->
+<footer style="padding:2rem;text-align:center;border-top:1px solid var(--border)">
+  <div style="font-family:'DM Serif Display',serif;font-size:1rem;color:var(--gold);margin-bottom:0.5rem">AgileConf UNTELS 2026</div>
+  <div style="font-size:0.75rem;color:var(--muted)">Examen Parcial 2026-II · Formulación y Evaluación de Proyectos de TI · Ingeniería de Sistemas</div>
+  <div style="font-size:0.72rem;color:rgba(139,148,158,.5);margin-top:0.3rem">Universidad Nacional Tecnológica de Lima Sur</div>
+</footer>
+
+<script>
+function scrollTo(id){
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
